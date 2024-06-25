@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  height: 40px;
+}
+
+.tab-active {
+  background-color: #ebf8ff; /* Adjust the active background color */
+}
+
+.tab:hover {
+  background-color: #e2e8f0; /* Adjust the hover background color */
+}
+.tabs-container {
+  overflow-x: auto;
+}
+
+@media (min-width: 1024px) {
+  .tabs-container {
+    overflow-x: visible;
+  }
+}

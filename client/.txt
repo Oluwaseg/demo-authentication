@@ -1,0 +1,124 @@
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+
+const UserPage = () => {
+  const { user, loading, handleLogout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/login");
+    }
+  }, [loading, user, navigate]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-white">
+      {user && (
+        <div className="container mx-auto px-4">
+          <div className="navbar bg-gray-800 shadow-lg">
+            <div className="flex-1">
+              <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+            </div>
+            <div className="flex-none gap-2">
+              <div className="hidden lg:flex space-x-4">
+                <a className="btn btn-ghost text-white">Home</a>
+                <a className="btn btn-ghost text-white">About</a>
+                <a className="btn btn-ghost text-white">Services</a>
+                <a className="btn btn-ghost text-white">Contact</a>
+              </div>
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img alt="User avatar" src={user.image} />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-gray-800 rounded-box w-74 text-white"
+                >
+                  <li>
+                    <a className="justify-between text-white">
+                      {user.name}
+                      <span className="badge badge-primary">New</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a className="justify-between text-white">{user.email}</a>
+                  </li>
+                  <li>
+                    <a className="text-white">Settings</a>
+                  </li>
+                  <li>
+                    <button onClick={handleLogout} className="text-white">
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div className="dropdown dropdown-end lg:hidden">
+                <button
+                  tabIndex={0}
+                  className="btn btn-ghost btn-circle"
+                  aria-label="Menu"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16m-7 6h7"
+                    />
+                  </svg>
+                </button>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 z-[1] p-2 shadow menu menu-compact dropdown-content bg-gray-800 rounded-box w-52 text-white"
+                >
+                  <li>
+                    <a className="text-white">Home</a>
+                  </li>
+                  <li>
+                    <a className="text-white">About</a>
+                  </li>
+                  <li>
+                    <a className="text-white">Services</a>
+                  </li>
+                  <li>
+                    <a className="text-white">Contact</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="mt-10">
+            <h1 className="text-4xl">
+              Welcome to your user page, {user.name}!
+            </h1>
+            <p className="mt-4">Your email is: {user.email}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default UserPage;
